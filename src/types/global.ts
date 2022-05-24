@@ -4,7 +4,7 @@ declare interface Credentials {
   provider?: 'bitbucket' | 'github' | 'gitlab' | 'google' | undefined
 }
 
-declare interface Todo {
+declare interface Post {
   id?: number
   user_id: string
   task: string

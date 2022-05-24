@@ -13,7 +13,7 @@
   >
     <div class="flex items-center px-4 py-4 sm:px-6">
       <div class="min-w-0 flex-1 flex items-center">
-        <div class="text-sm leading-5 font-medium truncate t-s">{{ todos.task }}</div>
+        <div class="text-sm leading-5 font-medium truncate t-s">{{ posts.task }}</div>
       </div>
       <button @click="toggleLike" class="w-4 h-4 ml-2  hover:border-black rounded">
         <svg
@@ -47,14 +47,14 @@
       </button>
     </div>
     <div class="flex items-center px-4 py-4 sm:px-6 t-m">
-      {{ todos.account.email.substring(0, todos.account.email.indexOf('@')) }}
+      {{ posts.account.email.substring(0, posts.account.email.indexOf('@')) }}
     </div>
   </li>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
-import { updateTaskCompletion, deleteTodo } from '@/vuetils/useTodo'
+import { updateTaskCompletion, deletePost } from '@/vuetils/useTodo'
 /* eslint-disable @typescript-eslint/camelcase */
 import { supabase } from '@/lib/supabase'
 import { userSession } from '@/vuetils/useAuth'
@@ -62,7 +62,7 @@ import { userSession } from '@/vuetils/useAuth'
 export default defineComponent({
   name: 'Todo',
   props: {
-    todos: {
+    posts: {
       type: Object,
       required: true,
     },
@@ -74,7 +74,7 @@ export default defineComponent({
         .from('likes')
         .select('*')
         .match({
-          post_id: props.todos.id,
+          post_id: props.posts.id,
           account_id: userSession?.value?.user?.id || '',
         })
         if(data?.length){
@@ -91,14 +91,14 @@ export default defineComponent({
           .from('likes')
           .delete()
           .match({
-            post_id: props.todos.id,
+            post_id: props.posts.id,
             account_id: userSession?.value?.user?.id || '',
           })
       } else {
         await supabase
           .from('likes')
           .insert({
-            post_id: props.todos.id,
+            post_id: props.posts.id,
             account_id: userSession?.value?.user?.id,
           })
           .single()

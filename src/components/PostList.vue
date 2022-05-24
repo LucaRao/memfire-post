@@ -16,9 +16,9 @@
     </div>
 
     <div class="bg-white shadow overflow-hidden rounded-md" style="height: 550px;overflow-y: scroll;">
-      <ul v-for="(todo, index) in allTodos" :key="index">
+      <ul v-for="(post, index) in allPosts" :key="index">
         <suspense>
-          <Todo :todos="todo" />
+          <Post :posts="post" />
         </suspense>
       </ul>
     </div>
@@ -28,18 +28,18 @@
 <script lang="ts">
 /* eslint-disable @typescript-eslint/camelcase */
 import { defineComponent, ref } from 'vue'
-import Todo from '@/components/Todo.vue'
-import { allTodos, fetchTodos, addTodo } from '@/vuetils/useTodo'
+import Post from '@/components/Post.vue'
+import { allPosts, fetchPosts, addPost } from '@/vuetils/useTodo'
 import { userSession } from '@/vuetils/useAuth'
 
 export default defineComponent({
-  name: 'TodoList',
+  name: 'PostList',
   components: {
-    Todo,
+    Post,
   },
 
   async setup() {
-    await fetchTodos()
+    await fetchPosts()
 
     const task = ref('');
     const userName = ref('')
@@ -60,15 +60,15 @@ export default defineComponent({
       }
       try {
         // Try and write the data to the database.
-        const todo = await addTodo({ user_id: userSession.value.user.id, task: task.value })
+        const todo = await addPost({ user_id: userSession.value.user.id, task: task.value })
 
         // If there was no response, don't do anything.
         if (!todo) {
           return
         }
-        // Otherwise, push the response into allTodos.
-        await fetchTodos()
-        console.log(allTodos,'allTodos')
+        // Otherwise, push the response into allPosts.
+        await fetchPosts()
+        console.log(allPosts,'allPosts')
 
         // Reset input field.
         task.value = ''
@@ -80,7 +80,7 @@ export default defineComponent({
     return {
       userName,
       task,
-      allTodos,
+      allPosts,
       insertTask,
       userSession,
     }
