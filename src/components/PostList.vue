@@ -45,7 +45,7 @@ export default defineComponent({
     const userName = ref('')
     userName.value = localStorage.getItem('userName') || ''
     /**
-     * Wrapper function adding a new todo for additional client-side error handling.
+     * Wrapper function adding a new post for additional client-side error handling.
      */
     async function insertTask() {
       // Guard for short task descriptions which will fail db policy.
@@ -60,10 +60,10 @@ export default defineComponent({
       }
       try {
         // Try and write the data to the database.
-        const todo = await addPost({ user_id: userSession.value.user.id, task: task.value })
+        const post = await addPost({ user_id: userSession.value.user.id, task: task.value })
 
         // If there was no response, don't do anything.
-        if (!todo) {
+        if (!post) {
           return
         }
         // Otherwise, push the response into allPosts.
@@ -73,7 +73,7 @@ export default defineComponent({
         // Reset input field.
         task.value = ''
       } catch (err) {
-        console.error('Unknown error when adding todo', err)
+        console.error('Unknown error when adding post', err)
       }
     }
 
