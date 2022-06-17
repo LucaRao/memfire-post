@@ -54,7 +54,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
-import { updateTaskCompletion, deletePost } from '@/vuetils/useTodo'
 /* eslint-disable @typescript-eslint/camelcase */
 import { supabase } from '@/lib/supabase'
 import { userSession } from '@/vuetils/useAuth'
@@ -106,7 +105,7 @@ export default defineComponent({
     fecthLike()
     }
     
-    return { updateTaskCompletion, toggleLike, userSession,like,fecthLike }
+    return { toggleLike, userSession,like,fecthLike }
   },
 
 })

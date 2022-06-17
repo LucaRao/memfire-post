@@ -2,7 +2,7 @@
   <div class="w-full">
     <h2 class="mb-12 font-bold text-3xl">Write a new post</h2>
     <!-- <h2 class="mb-12 font-bold text-2xl">Content</h2> -->
-    <h2 class="mb-12 font-bold text-2xl">welcome {{userName.substring(0,userName.indexOf('@'))}} !</h2>
+    <h2 class="mb-12 font-bold text-2xl">welcome {{userSession.user.email.substring(0,userSession.user.email.indexOf('@'))}} !</h2>
     <div class="flex gap-2 my-2">
       <input
         v-model="task"
@@ -29,7 +29,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { defineComponent, ref } from 'vue'
 import Post from '@/components/Post.vue'
-import { allPosts, fetchPosts, addPost } from '@/vuetils/useTodo'
+import { allPosts, fetchPosts, addPost } from '@/vuetils/usePost'
 import { userSession } from '@/vuetils/useAuth'
 
 export default defineComponent({
@@ -42,8 +42,6 @@ export default defineComponent({
     await fetchPosts()
 
     const task = ref('');
-    const userName = ref('')
-    userName.value = localStorage.getItem('userName') || ''
     /**
      * Wrapper function adding a new post for additional client-side error handling.
      */
@@ -78,7 +76,6 @@ export default defineComponent({
     }
 
     return {
-      userName,
       task,
       allPosts,
       insertTask,

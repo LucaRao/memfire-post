@@ -56,7 +56,7 @@ create function public.handle_new_account()
 returns trigger as $$
 begin
   insert into public.account (id, email)
-  values (new.id, new.email)
+  values (new.id, new.email);
   return new;
 end;
 $$ language plpgsql security definer;

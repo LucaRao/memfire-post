@@ -49,40 +49,5 @@ async function addPost(post: Post): Promise<null | Post> {
   }
 }
 
-/**
- * Targets a specific post via its record id and updates the is_completed attribute.
- */
-async function updateTaskCompletion(post: Post, isCompleted: boolean) {
-  try {
-    const { error } = await supabase
-      .from('posts')
-      .update({ is_complete: isCompleted })
-      .eq('id', post.id)
-      .single()
 
-    if (error) {
-      alert(error.message)
-      console.error('There was an error updating', error)
-      return
-    }
-
-    console.log('Updated task', post.id)
-  } catch (err) {
-    alert('Error')
-    console.error('Unknown problem updating record', err)
-  }
-}
-
-/**
- *  Deletes a post via its id
- */
-async function deletePost(post: Post) {
-  try {
-    await supabase.from('posts').delete().eq('id', post.id)
-    console.log('deleted post', post.id)
-  } catch (error) {
-    console.error('error', error)
-  }
-}
-
-export { allPosts, fetchPosts, addPost, updateTaskCompletion, deletePost }
+export { allPosts, fetchPosts, addPost}
