@@ -16,7 +16,7 @@
       <Suspense>
         <template #default>
           <div>
-            <PostList />
+            <TodoList />
             <button class="btn-black w-full mt-12" @click="handleLogout">
               Logout
             </button>
@@ -34,7 +34,7 @@
 <script>
 import Auth from '@/components/Auth.vue'
 import PasswordReset from '@/components/PasswordReset.vue'
-import PostList from '@/components/PostList.vue'
+import TodoList from '@/components/TodoList.vue'
 import Loading from '@/components/Loading.vue'
 import Footer from '@/components/Footer.vue'
 import { userSession, handleLogout } from '@/vuetils/useAuth'
@@ -44,7 +44,7 @@ export default {
   components: {
     Auth,
     PasswordReset,
-    PostList,
+    TodoList,
     Loading,
     Footer,
   },

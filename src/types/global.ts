@@ -4,10 +4,9 @@ declare interface Credentials {
   provider?: 'bitbucket' | 'github' | 'gitlab' | 'google' | undefined
 }
 
-declare interface Post {
+declare interface Todo {
   id?: number
-  user_id: string
+  email?: string
   task: string
-  is_complete?: boolean
   inserted_at?: string
 }

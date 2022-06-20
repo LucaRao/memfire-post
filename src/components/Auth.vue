@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { handleLogin, handleSignup, handlePasswordReset } from '@/vuetils/useAuth'
+import { handleLogin, handleOAuthLogin, handleSignup, handlePasswordReset } from '@/vuetils/useAuth'
 
 export default defineComponent({
   name: 'Auth',
@@ -58,6 +58,7 @@ export default defineComponent({
       email,
       password,
       handleLogin,
+      handleOAuthLogin,
       handleSignup,
       handlePasswordReset,
     }

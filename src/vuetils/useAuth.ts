@@ -21,9 +21,6 @@ async function handleLogin(credentials: Credentials) {
     if (!error && !user) {
       alert('Check your email for the login link!')
     }
-    if(user){
-      localStorage.setItem('userName',credentials.email|| '')
-    }
   } catch (error) {
     console.error('Error thrown:', error.message)
     alert(error.error_description || error)
@@ -54,6 +51,14 @@ async function handleSignup(credentials: Credentials) {
   }
 }
 
+/**
+ * Handles signup via Third Pary Login.
+ * https://supabase.io/docs/guides/auth#third-party-logins
+ */
+async function handleOAuthLogin(provider: Provider) {
+  const { error } = await supabase.auth.signIn({ provider })
+  if (error) console.error('Error: ', error.message)
+}
 
 /**
  * Handles password reset. Will send an email to the given email address.
@@ -110,6 +115,7 @@ async function handleLogout() {
 export {
   userSession,
   handleLogin,
+  handleOAuthLogin,
   handleSignup,
   handleLogout,
   handlePasswordReset,
