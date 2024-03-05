@@ -10,20 +10,20 @@ const userSession = ref<Session | null>(null)
  */
 async function handleLogin(credentials: Credentials) {
   try {
-    const { error, user } = await supabase.auth.signIn({
-      email: credentials.email,
-      password: credentials.password,
+    const {data, error } = await supabase.auth.signInWithPassword({
+      email: credentials.email || '',
+      password: credentials.password || '',
     })
     if (error) {
       alert('Error logging in: ' + error.message)
     }
     // No error throw, but no user detected so send magic link
-    if (!error && !user) {
+    if (!error && !data) {
       alert('Check your email for the login link!')
     }
   } catch (error) {
-    console.error('Error thrown:', error.message)
-    alert(error.error_description || error)
+    console.error('Error thrown:', error)
+    alert( error)
   }
 }
 
@@ -56,7 +56,7 @@ async function handleSignup(credentials: Credentials) {
  * https://supabase.io/docs/guides/auth#third-party-logins
  */
 async function handleOAuthLogin(provider: Provider) {
-  const { error } = await supabase.auth.signIn({ provider })
+  const { error } = await supabase.auth.signInWithOAuth({ provider })
   if (error) console.error('Error: ', error.message)
 }
 
@@ -68,7 +68,7 @@ async function handlePasswordReset() {
   if (!email) {
     window.alert('Email address is required.')
   } else {
-    const { error } = await supabase.auth.api.resetPasswordForEmail(email)
+    const { error } = await supabase.auth.resetPasswordForEmail(email)
     if (error) {
       alert('Error: ' + error.message)
     } else {
@@ -79,7 +79,7 @@ async function handlePasswordReset() {
 
 async function handleUpdateUser(credentials: Credentials) {
   try {
-    const { error } = await supabase.auth.update(credentials)
+    const { error } = await supabase.auth.updateUser(credentials)
     if (error) {
       alert('Error updating user info: ' + error.message)
     } else {
@@ -87,7 +87,7 @@ async function handleUpdateUser(credentials: Credentials) {
       window.location.href = '/'
     }
   } catch (error) {
-    alert('Error updating user info: ' + error.message)
+    alert('Error updating user info: ' + error)
   }
 }
 
